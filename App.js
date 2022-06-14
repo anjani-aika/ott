@@ -5,108 +5,105 @@
  * @format
  * @flow strict-local
  */
-
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+ import 'react-native-gesture-handler'
+ import React, { useState,useEffect } from 'react';
+ import {SafeAreaView,ScrollView,StatusBar,StyleSheet,Text, useColorScheme,View,ActivityIndicator} from 'react-native';
+ import { useMemo } from 'react';
+ import {Colors} from 'react-native/Libraries/NewAppScreen';
+ import { NavigationContainer } from '@react-navigation/native';
+ import { createStackNavigator } from '@react-navigation/stack';
+ import { AuthContext } from './components/Context';
+//  import Start from './screens/credentialsScreen/Start';
+ import Login from './screens/credentials/Login';
+ import GetOTP from './screens/credentials/GetOTP';
+ import Start from './screens/credentials/Start';
+//  import Register from './screens/credentialsScreen/Register';
+//  import ForgotPassword from './screens/credentialsScreen/forgotPassword';
+//  import MyDrawer from './screens/home/Drawer';
+//  import SplashScreen from  "react-native-splash-screen";
+ import AsyncStorage from '@react-native-async-storage/async-storage';
+ 
+ const Stack = createStackNavigator();
+ const globalScreenOptions = {
+   headerShown: false,
+   cardStyle: { backgroundColor: '#FFFFFF' },
+ };
+ 
+ 
+ const App= () => {
+   const [initialRouteName,setinitialRouteName] = useState(false);
+   const [loading,setIsLoading]=useState(false)
+   useEffect(() => {
+    //  SplashScreen.hide();
+    // getUserInfo();
+   },[]);
+   
+  //  const getUserInfo = async () =>{
+ 
+  //    let res = await AsyncStorage.getItem("user_info");
+  //    let arr = JSON.parse(res);
+  //    console.log("ARRRRR ------",arr);
+  //   if(arr === null || arr === "null"){
+  //    console.log("IF LOGIN ------");
+  //    setinitialRouteName((initialRouteName)=>{
+  //      return "Start"
+  //    });
+  //   }
+  //   else{
+  //     console.log("ELSE HOME ------");
+  //     setinitialRouteName((initialRouteName)=>{
+  //      return "Home"
+  //    });
+  //    console.log("intialROUTE NAME ----",initialRouteName)
+  //   }
+  //    setIsLoading(false)
+  //   }
+ 
+           
+   return (
+     <>
+       <ActivityIndicator style={{position:'absolute',top:'40%',alignSelf:'center'}} size='large' color="#F55633"  animating={loading}/>
+       {loading==false?(
+           <>
+            {/* <AuthContext.Provider> */}
+              <NavigationContainer >
+                <Stack.Navigator screenOptions={globalScreenOptions} initialRouteName={initialRouteName && initialRouteName=='Home'?'Home':'Start'}>
+                  
+                <> 
+                <Stack.Screen name="GetOTP" component={GetOTP} /> 
+                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Start" component={Start} />
+                {/* <Stack.Screen name="GetOTP" component={GetOTP} />  */}
+                {/* <Stack.Screen name="Login" component={Login} /> */}
+                </>
+              </Stack.Navigator>
+            </NavigationContainer>
+          {/* </AuthContext.Provider> */}
+           </>
+       ):null}
+     
+     </>
+   );
+ };
+ 
+ const styles = StyleSheet.create({
+   sectionContainer: {
+     marginTop: 32,
+     paddingHorizontal: 24,
+   },
+   sectionTitle: {
+     fontSize: 24,
+     fontWeight: '600',
+   },
+   sectionDescription: {
+     marginTop: 8,
+     fontSize: 18,
+     fontWeight: '400',
+   },
+   highlight: {
+     fontWeight: '700',
+   },
+ });
+ 
+ export default App;
+ 
