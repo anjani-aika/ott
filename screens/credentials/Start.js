@@ -7,7 +7,7 @@ import { Button } from "react-native-elements";
 const Start=({navigation})=>{
     const onPress=()=>{
         console.log("pressed")
-        navigation.navigate('Login');
+        navigation.navigate('Home');
     }
     return (
         <View style={{backgroundColor:'black',flex:1}}>

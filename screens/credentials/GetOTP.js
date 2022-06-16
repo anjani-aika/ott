@@ -10,6 +10,9 @@ const GetOTP=({navigation})=>{
     const otpInputRef = useRef(null);
     const [val,setVal]=useState('')
     const [isGetOTPPressed,setIsGetOTPPressed]=useState(false);
+    const onPressEnterOTP=()=>{
+        navigation.navigate('Subscribe');
+    }
 
     return (
         <View style={{backgroundColor:'black',flex:1,justifyContent:'space-evenly'}}>
@@ -42,7 +45,7 @@ const GetOTP=({navigation})=>{
            {isGetOTPPressed==false?(
                 <Button onPress={()=>setIsGetOTPPressed(true)} buttonStyle={{width:'80%', borderRadius:15,alignSelf:'center',height:58,backgroundColor:'#6D44B8'}} title="Get OTP" />
            ):(
-                <Button onPress={()=>{console.log(otpInputRef)}} buttonStyle={{width:'70%', borderRadius:15,alignSelf:'center',height:58,backgroundColor:'#6D44B8'}} title="Enter OTP"/>
+                <Button onPress={()=>{onPressEnterOTP()}} buttonStyle={{width:'70%', borderRadius:15,alignSelf:'center',height:58,backgroundColor:'#6D44B8'}} title="Enter OTP"/>
            )}
           
         </View>

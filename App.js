@@ -17,11 +17,14 @@
  import Login from './screens/credentials/Login';
  import GetOTP from './screens/credentials/GetOTP';
  import Start from './screens/credentials/Start';
-//  import Register from './screens/credentialsScreen/Register';
-//  import ForgotPassword from './screens/credentialsScreen/forgotPassword';
-//  import MyDrawer from './screens/home/Drawer';
-//  import SplashScreen from  "react-native-splash-screen";
+ import SubscribeSlider from './screens/credentials/Subscribe';
  import AsyncStorage from '@react-native-async-storage/async-storage';
+ import Account from './screens/home/Account';
+import MyDrawer from './screens/home/Drawer';
+import Support from './screens/home/Support';
+import PrivacyPolicy from './screens/home/PrivacyPolicy';
+import WatchList from './screens/home/WatchList';
+import Downloads from './screens/home/Downloads';
  
  const Stack = createStackNavigator();
  const globalScreenOptions = {
@@ -65,20 +68,27 @@
        <ActivityIndicator style={{position:'absolute',top:'40%',alignSelf:'center'}} size='large' color="#F55633"  animating={loading}/>
        {loading==false?(
            <>
-            {/* <AuthContext.Provider> */}
+        <AuthContext.Provider value={'authContext'}> 
               <NavigationContainer >
-                <Stack.Navigator screenOptions={globalScreenOptions} initialRouteName={initialRouteName && initialRouteName=='Home'?'Home':'Start'}>
+                <Stack.Navigator screenOptions={globalScreenOptions} initialRouteName={'Downloads'}>
                   
                 <> 
+                <Stack.Screen name="WatchList" component={WatchList} /> 
+                <Stack.Screen name="Downloads" component={Downloads} /> 
+                <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} /> 
+                <Stack.Screen name="Account" component={Account} /> 
+                <Stack.Screen name="Support" component={Support} /> 
                 <Stack.Screen name="GetOTP" component={GetOTP} /> 
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Start" component={Start} />
+                <Stack.Screen name="Home" component={MyDrawer}/>
+                <Stack.Screen name="Subscribe" component={SubscribeSlider} />
                 {/* <Stack.Screen name="GetOTP" component={GetOTP} />  */}
                 {/* <Stack.Screen name="Login" component={Login} /> */}
                 </>
               </Stack.Navigator>
             </NavigationContainer>
-          {/* </AuthContext.Provider> */}
+    </AuthContext.Provider>
            </>
        ):null}
      
